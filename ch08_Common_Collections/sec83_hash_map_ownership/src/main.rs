@@ -73,17 +73,35 @@ fn main() {
     // 3. Updating a Value based on the Old Value
 
     /*
+    Another common use case of HashMaps is to look up a key's value nd then update it based on the old
+    value.
 
+    The following counts how many times each word appears in some text.
     */
     let text = "hello world wonderful world";
 
     let mut map = HashMap::new();
 
+    // Remembering when iterating over a HashMap the keys are never in a set order
     for word in text.split_whitespace() {
+        // `or_insert()` returns a mutable reference `&mut V`. So we need to dereference it with `*`.
         let count = map.entry(word).or_insert(0);
         *count += 1;
-    }
+    } // The var `count`, aka a mutable reference goes out of scope here. So all changes are safe
+      // according to borrowing rules.
 
     // Print out: {"world: 2, "hello": 1, "wonderful": 1}
     println!("{:?}", map);
+
+    // 4. Hashing Functions
+
+    /*
+    By default, HashMap uses a hashing function called `SipHash` that can provide resistance to Denial
+    of Service (DoS) attacks involving hash tables. IT's not the fastest hashing algorithm available
+    but the trade-of for better security versus the drop in performance is worth it.
+
+    If the default hashing function is too slow for your program you can switch to another function
+    by specifiying a different `hasher`. A `hasher` is a typ that implements the `BuildHasher` trait.
+    `crates.io` has libraries that provide hashers implementing many common hashing algorithms.
+    */
 }
