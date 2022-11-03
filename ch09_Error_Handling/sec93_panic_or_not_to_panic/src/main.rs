@@ -18,7 +18,16 @@ functionality under test. Because `panic!` is how a test is marked as a failure,
 use std::net::IpAddr;
 
 fn main() {
+    /*
+    It's also appropriate to call `unwrap()` or `expect()` when you have some other logic that ensures the
+    `Result` will have an `Ok` value, BUT the logic isn't something the COMPILER understands.
+
+    To put in other words, you have a `Result` value you know will be `Ok` no matter what, but the compiler
+    isn't smart enought to know that. Therefor, you still need to handle the `Result` value (example below):
+    */
     let _home: IpAddr = "127.0.0.1"
         .parse()
         .expect("Hardcoded IP address should be valid");
+    // As stated a hardcoded ip addr should never be wrong, but we still have to handle the `Result` from
+    // `parse()`.
 }
