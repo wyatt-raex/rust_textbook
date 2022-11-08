@@ -10,6 +10,11 @@ struct Point<T> {
     y: T,
 }
 
+/*
+Here we declare two generic types `T` and `U`. `T` and `U` could end up being the same type, or they
+can end up being different types. Hence the examples `both_integer`, `both_float`, and `integer_and_float`
+below in the `main()` function.
+*/
 struct Point2<T, U> {
     x: T,
     y: U,
